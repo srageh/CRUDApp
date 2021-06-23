@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="update-container">
+      <div class="update-form">
+        <h1 style="text-align: center; font-size: 40px; margin-bottom: 1em">
+          Add Customer
+        </h1>
+
+        <form action="/add" method="POST">
+          <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" />
+          </div>
+
+          <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" />
+          </div>
+          <div>
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age" />
+          </div>
+          <div>
+            <label for="job">Job:</label>
+            <input type="text" id="job" name="job" />
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" />
+          </div>
+          <div style="margin-top: 2em">
+            <input type="submit" id="btnSave" name="btnSave" value="Save" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script></script>
+</html>

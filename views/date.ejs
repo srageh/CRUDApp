@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="update-container">
+      <div class="update-form">
+        <h1 style="text-align: center; font-size: 40px; margin-bottom: 1em">
+          Update Customer
+        </h1>
+        <form>
+          <div id="error-msg" style="color: red"></div>
+          <div style="display: none">
+            <label for="iD">Last Name:</label>
+            <input type="text" id="iD" value="<%= result[0].id %>" name="iD" />
+          </div>
+
+          <div>
+            <label for="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              value="<%= result[0].lastName %>"
+              name="lastName"
+            />
+          </div>
+
+          <div>
+            <label for="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstName"
+              value="<%= result[0].firstName %>"
+              name="firstName"
+            />
+          </div>
+          <div>
+            <label for="age">Age:</label>
+            <input
+              type="text"
+              value="<%= result[0].age %>"
+              id="age"
+              name="age"
+            />
+          </div>
+          <div>
+            <label for="job">Job:</label>
+            <input
+              type="text"
+              value="<%= result[0].job %>"
+              id="job"
+              name="job"
+            />
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input
+              type="text"
+              value="<%= result[0].email %>"
+              id="email"
+              name="email"
+            />
+          </div>
+          <div style="margin-top: 2em">
+            <input
+              onclick="saveCustomer()"
+              type="button"
+              id="btnSave"
+              value="Save"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+    function saveCustomer() {
+      var error = "";
+
+      var nameRegex = /^[a-zA-Z ]{2,30}$/;
+      var wordRegex = /^[a-zA-Z]+-?[a-zA-Z]+$/;
+      var emailRegex =
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      var ageRegex = /^[1][89]|[2-9][0-9]$/;
+      var id = document.getElementById("iD").value;
+      var fName = document.getElementById("firstName").value;
+      var lName = document.getElementById("lastName").value;
+      var age = document.getElementById("age").value;
+      var job = document.getElementById("job").value;
+      var email = document.getElementById("email").value;
+      //console.log(job);
+      document.getElementById("error-msg").innerHTML = "";
+      // validation(nameRegex, fName, "First Name required");
+      // validation(nameRegex, lName, "Last Name required");
+      // validation(wordRegex, job, "Job required");
+      // validation(ageRegex, age, "Age required");
+      // validation(emailRegex, email, "Email required");
+
+      if (
+        validation(nameRegex, fName, "First Name required") &
+        validation(nameRegex, lName, "Last Name required") &
+        validation(wordRegex, job, "Job required") &
+        validation(ageRegex, age, "Min age 18, required") &
+        validation(emailRegex, email, "Email required")
+      ) {
+        const response = fetch(`http://localhost:8080/update/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            lastName: lName,
+            firstName: fName,
+            age: age,
+            job: job,
+            email: email,
+          }),
+        })
+          .then((res) => res.json())
+          .then((respData) => {
+            console.log(respData);
+            window.location.href = "http://localhost:8080/";
+          });
+
+        // const messageData = await response.json();
+
+        // window.location.href = "http://localhost:8080/";
+
+        //const respJson = await resp.json();
+        // console.log(respJson);
+      } else {
+        //console.log(error);
+        console.log(error);
+        document.getElementById("error-msg").innerHTML = `<p>${error}</p>`;
+      }
+
+      //console.log(word);
+      // const isValid = wordRegex.test(word);
+      // console.log(isValid);
+
+      function validation(regex, input, message) {
+        //console.log(message);
+        if (regex.test(input)) {
+          return true;
+        }
+
+        error += `*${message} <br>`;
+        //console.log(error);
+        //  console.log(error);
+        return false;
+      }
+    }
+  </script>
+</html>

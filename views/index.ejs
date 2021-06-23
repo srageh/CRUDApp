@@ -5,8 +5,97 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <h1>Hello</h1>
+    <div class="container-home">
+      <h2
+        style="
+          text-align: center;
+          margin-top: 3em;
+          font-size: 2em;
+          color: rgb(1, 1, 184);
+        "
+      >
+        Customer Home Page
+      </h2>
+
+      <form action="/add" method="GET">
+        <input
+          type="submit"
+          value="Add customer"
+          
+          style="margin-bottom: 10px; width: 120px"
+        >
+         
+        </input>
+      </form>
+
+      <form>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Last Name</th>
+              <th>First Name</th>
+              <th>Age</th>
+              <th>Job</th>
+              <th>Email</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% result.forEach((element,key) => {%>
+            <tr>
+              <td><%= element.id %></td>
+              <td><%= element.lastName %></td>
+              <td><%= element.firstName %></td>
+              <td><%= element.age %></td>
+              <td><%= element.job %></td>
+              <td><%= element.email %></td>
+              <td>
+                <input
+                  id="<%=key +1%>"
+                  onclick="updateCustomer(this.id)"
+                  type="button"
+                  value="Update"
+                />
+              </td>
+
+              <td>
+                <input
+                  id="<%=key +1%>"
+                  onclick="deleteCustomer(this.id)"
+                  type="button"
+                  value="Delete"
+                />
+              </td>
+            </tr>
+
+            <%});%>
+          </tbody>
+        </table>
+      </form>
+    </div>
   </body>
+
+  <script>
+    async function updateCustomer(id) {
+      const resp = await fetch(`http://localhost:8080/update/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      //const data = await resp.json();
+
+      window.location = `http://localhost:8080/update/${id}`;
+
+      //console.log(id);
+    }
+
+   
+  </script>
 </html>
